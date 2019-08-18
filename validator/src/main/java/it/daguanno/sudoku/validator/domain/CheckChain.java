@@ -24,7 +24,7 @@ public abstract class CheckChain {
 	public int check(SudokuMatrixDTO dto) throws Exception {
 		logger.log(INFO, "{0} : {1}",new Object[]{START, getClass().getName() });
 		int ret = execute(dto);
-		if(getNext() != null) {
+		if(getNext() != null && ret == 0) {
 			ret += getNext().check(dto);
 		}
 		logger.log(INFO, "{0} : {1}",new Object[]{END, getClass().getName() });

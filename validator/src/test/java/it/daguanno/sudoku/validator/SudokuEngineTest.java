@@ -182,58 +182,28 @@ public class SudokuEngineTest {
 	
 	@Test
 	public void invalidNumTest() throws Exception {
-		Exception ex = null;
-		try {
-			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidNumber.txt"));
-		} catch (Exception e) {
-			ex = e;
-		}
-		assertTrue(ex != null);
-		assertTrue(ex instanceof SudokuException);
-		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
+		int ret = SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidNumber.txt"));
+		assertTrue(ret == 1);
 
 	}
 
 	@Test
 	public void invalidSubMatrixTest() throws Exception {
-		Exception ex = null;
-		try {
-			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "Invalid3x3Matrix.txt"));
-		} catch (Exception e) {
-			ex = e;
-		}
-		assertTrue(ex != null);
-		assertTrue(ex instanceof SudokuException);
-		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
-
+		int ret = SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "Invalid3x3Matrix.txt"));
+		assertTrue(ret == 1);
 	}
 	
 	@Test
 	public void invalidRowTest() throws Exception {
-		Exception ex = null;
-		try {
-			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidRow.txt"));
-		} catch (Exception e) {
-			ex = e;
-		}
-		assertTrue(ex != null);
-		assertTrue(ex instanceof SudokuException);
-		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
+		int ret = SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidRow.txt"));
+		assertTrue(ret == 1);
 
 	}
 	
 	@Test
 	public void invalidColumnTest() throws Exception {
-		Exception ex = null;
-		try {
-			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidColumn.txt"));
-		} catch (Exception e) {
-			ex = e;
-		}
-		assertTrue(ex != null);
-		assertTrue(ex instanceof SudokuException);
-		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
-
+		int ret = SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidColumn.txt"));
+		assertTrue(ret == 1);
 	}
 
 

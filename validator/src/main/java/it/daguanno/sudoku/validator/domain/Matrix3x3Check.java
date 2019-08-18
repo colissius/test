@@ -4,7 +4,6 @@ import static it.daguanno.sudoku.validator.commons.costants.IConstants.END;
 import static it.daguanno.sudoku.validator.commons.costants.IConstants.START;
 import static it.daguanno.sudoku.validator.domain.IEngineConstants.SUB_MATRIX_NUMBER;
 import static it.daguanno.sudoku.validator.domain.IEngineConstants.SUB_MATRIX_SIZE;
-import static it.daguanno.sudoku.validator.commons.exceptions.SudokuException.EnumSudokuException.INVALID;
 import static java.util.logging.Level.FINE;
 
 import java.util.Set;
@@ -12,7 +11,6 @@ import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import it.daguanno.sudoku.validator.commons.data.SudokuMatrixDTO;
-import it.daguanno.sudoku.validator.commons.exceptions.SudokuException;
 
 public class Matrix3x3Check extends CheckChain {
 	
@@ -213,27 +211,28 @@ THE ALGORITHM
 	public int execute(SudokuMatrixDTO dto) throws Exception {
 		logger.info(START);
 		Short matrix[][] = dto.getMatrix();
-		int ret = 0;
 		//get the sub-matrix num 
 		for(int numSubMatrix = 0; numSubMatrix < SUB_MATRIX_NUMBER; numSubMatrix++ ) {
-			findPoint( matrix,  numSubMatrix);
+			if(!findPoint( matrix,  numSubMatrix)) {
+				return 1;
+			}
 		}
 		logger.info(END);
-		return ret;
+		return 0;
 	}
 	
-	public void findPoint(Short matrix[][], int numSubMatrix) throws Exception {
+	public boolean findPoint(Short matrix[][], int numSubMatrix) throws Exception {
 		
 		//	(sub-matrix num % (mod) 3 ) * 3
 		int currRow = numSubMatrix/SUB_MATRIX_SIZE*SUB_MATRIX_SIZE;
 		// (sub-matrix num / 3 ) * 3
 		int currColumn = numSubMatrix%SUB_MATRIX_SIZE*SUB_MATRIX_SIZE;
 		// 3x3 matrix check
-		subMatrixCheck(matrix, currRow , currColumn);
+		return subMatrixCheck(matrix, currRow , currColumn);
 		
 	}
 	
-	public void subMatrixCheck(Short matrix[][], int startRow , int startColum) throws Exception {
+	public boolean subMatrixCheck(Short matrix[][], int startRow , int startColum) throws Exception {
 		Set<Short> setCheck = new TreeSet<Short>();
 		// 3x3 matrix check
 		for(int x = startRow; x < startRow + SUB_MATRIX_SIZE; x++) {
@@ -241,12 +240,13 @@ THE ALGORITHM
 				short currVal = matrix[x][y];
 				logger.log(FINE, "matrix[{0}][{1}] value {2}",new Object[]{y,x,currVal});
 				if(setCheck.contains(currVal)) {
-					throw new SudokuException(INVALID);
+					return false;
 				} else {
 					setCheck.add(currVal);
 				}
 			}
 		}
+		return true;
 	}
 	
 

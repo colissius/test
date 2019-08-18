@@ -12,6 +12,7 @@ import java.util.logging.Handler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+
 public class LogConfig {
 
 	public final static String 	DATE_FORMAT		= "dd-MM-yyyy"	;

@@ -2,7 +2,9 @@ package it.daguanno.sudoku.validator;
 
 import static it.daguanno.sudoku.validator.commons.costants.IConstants.END;
 import static it.daguanno.sudoku.validator.commons.costants.IConstants.EXCEPTION;
+import static it.daguanno.sudoku.validator.commons.costants.IConstants.FAIL;
 import static it.daguanno.sudoku.validator.commons.costants.IConstants.START;
+import static it.daguanno.sudoku.validator.commons.costants.IConstants.SUCCESS;
 import static it.daguanno.sudoku.validator.commons.exceptions.SudokuException.EnumSudokuException.NO_ARGS;
 import static it.daguanno.sudoku.validator.commons.exceptions.SudokuException.EnumSudokuException.TOO_MANY_INFO;
 import static it.daguanno.sudoku.validator.commons.utils.StringUtils.isEmpty;
@@ -16,7 +18,6 @@ import it.daguanno.sudoku.validator.commons.exceptions.SudokuException;
 import it.daguanno.sudoku.validator.commons.log.LogConfig;
 
 public class Main {
-	
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
 	
 	public static void main(String[] args) throws Exception {
@@ -32,12 +33,17 @@ public class Main {
 		} catch (Exception e) {
 			endValue = 1;
 			logger.log(SEVERE, EXCEPTION, e);
+			throw e;
 		} finally {
 			logger.info(END);
-			System.exit(endValue);
+			logger.info(endValue == 0 ? SUCCESS : FAIL );
 		}
 	}
 
+	private Main() {
+		
+	}
+	
 	private static void argsValidation(String[] args) throws SudokuException {
 		if(args == null || args.length == 0 || isEmpty(args[0])) {
 			throw new SudokuException(NO_ARGS);
