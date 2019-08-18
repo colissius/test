@@ -5,7 +5,6 @@ import static it.daguanno.sudoku.validator.commons.costants.IConstants.START;
 
 import java.util.logging.Logger;
 
-import it.daguanno.sudoku.validator.Main;
 import it.daguanno.sudoku.validator.application.factory.impl.SudokuFactory;
 import it.daguanno.sudoku.validator.application.model.impl.FileSystemContext;
 import it.daguanno.sudoku.validator.commons.data.SudokuMatrixDTO;
@@ -15,13 +14,13 @@ import it.daguanno.sudoku.validator.infrastructure.repository.ISudokuRepository;
 
 public class SudokuFacade {
 	
-	private static final Logger logger = Logger.getLogger(Main.class.getName());
+	private static final Logger logger = Logger.getLogger(SudokuFacade.class.getName());
 	
 	public static SudokuFacade build() {
 		return new SudokuFacade();
 	}
 	
-	public void executeSudokuValidation(FileSystemContext context) throws Exception {
+	public int executeSudokuValidation(FileSystemContext context) throws Exception {
 		logger.info(START);
 		//give me the factory
 		SudokuFactory factory = SudokuFactory.build();
@@ -36,8 +35,9 @@ public class SudokuFacade {
 		//give me the fine data
 		SudokuMatrixDTO dto = repository.extract(context);
 		//process me the fine data
-		engine.check(dto);
+		int ret = engine.check(dto);
 		logger.info(END);
+		return ret;
 	}
 	
 }

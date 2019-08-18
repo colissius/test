@@ -78,10 +78,11 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 	// during the reading I perform a validation
 	public SudokuMatrixDTO extract(FileSystemContext context) throws Exception {
 		logger.info(START);
-		//reading resources 
-		Reader buffer = getBuffer(getFile(context));
 		//check config
 		checkConfig(context);
+		//reading resources 
+		Reader buffer = getBuffer(getFile(context));
+
 		//set parsing config
 		char rowSeparator = context.getFsConfig().getRowSeparator();
 		char colSeparator = context.getFsConfig().getColumnSeparator();
@@ -97,8 +98,6 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 		sort(escape);
 		
 		char ch = 0;
-		int numCount = 0;
-		
 		boolean isLastNumeric = false;
 		while ((r = buffer.read()) != -1) {
 			ch = (char) r;
@@ -114,7 +113,6 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 			if(isDigit(ch) && !isLastNumeric) {
 				isLastNumeric = true;
 				matrix[row][col] = Short.valueOf(String.valueOf(ch));
-				numCount++;
 			} else if(ch == colSeparator && isLastNumeric) {
 				isLastNumeric = false;
 				col++;
@@ -125,7 +123,7 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 					throw new SudokuException(TOO_FEW_COLUMNS);
 				}
 				col = 0;
-			} else if(binarySearch(escape, ch) == -1){
+			} else if(binarySearch(escape, ch) < 0){
 				//binarySearch
 				//Searches the specified array of chars for the specified value using 
 				//thebinary search algorithm. The array must be sorted (asby the 
@@ -136,9 +134,7 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 				throw new SudokuException(PARSING_ERROR);
 			}
 		}
-		if(numCount == 81 && isDigit(ch) && row < rowsNum-1) {
-			throw new SudokuException(TOO_FEW_ROWS);
-		} else if(!isDigit(ch) && row < rowsNum) {
+		if(!isDigit(ch) && row < rowsNum) {
 			throw new SudokuException(TOO_FEW_ROWS);
 		}
 		
@@ -152,7 +148,8 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 
 	private void checkConfig(FileSystemContext context) throws SudokuException {
 		//config check
-		if(context.getFsConfig() == null) {
+		if(context == null 
+				|| context.getFsConfig() == null) {
 			throw new SudokuException(NO_CONFIG);
 		}
 	}
@@ -164,7 +161,7 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 		}
 		File file = new File(context.getFileName());
 
-		if (!file.exists()) {
+		if (!file.exists() || file.isDirectory()) {
 			throw new SudokuException(NO_FILE);
 		}
 		return file;

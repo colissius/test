@@ -28,7 +28,7 @@ public class Main {
 			//args check
 			argsValidation(args); 
 			//start logic
-			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(args[0]));
+			endValue = SudokuFacade.build().executeSudokuValidation(new FileSystemContext(args[0]));
 		} catch (Exception e) {
 			endValue = 1;
 			logger.log(SEVERE, EXCEPTION, e);

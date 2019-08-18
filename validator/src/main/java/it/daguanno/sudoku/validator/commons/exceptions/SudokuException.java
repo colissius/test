@@ -5,7 +5,7 @@ public class SudokuException extends Exception {
 	private static final long serialVersionUID = 1L;
 	//changing an error message does not 
 	//require to change other points
-	public enum EnumSudokuException {
+	public static enum EnumSudokuException {
 
 		NO_ARGS 	 	("NO ARGS"				),
 		TOO_MANY_INFO   ("TOO MANY INFORMATION"	),

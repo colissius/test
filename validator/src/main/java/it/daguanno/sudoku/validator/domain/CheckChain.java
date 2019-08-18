@@ -6,12 +6,11 @@ import static java.util.logging.Level.INFO;
 
 import java.util.logging.Logger;
 
-import it.daguanno.sudoku.validator.application.factory.impl.SudokuFactory;
 import it.daguanno.sudoku.validator.commons.data.SudokuMatrixDTO;
 
 public abstract class CheckChain {
 
-	protected static final Logger logger = Logger.getLogger(SudokuFactory.class.getName());
+	protected static final Logger logger = Logger.getLogger(CheckChain.class.getName());
 	
 	protected CheckChain next;
 	
