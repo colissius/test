@@ -41,9 +41,4 @@ public abstract class CheckChain {
 		this.next = next;
 	}
 
-	public CheckChain next(ColumnCheck next) {
-		this.next = next;
-		return this;
-	}
-	
 }

@@ -194,4 +194,56 @@ public class SudokuEngineTest {
 
 	}
 
+	@Test
+	public void invalidSubMatrixTest() throws Exception {
+		Exception ex = null;
+		try {
+			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "Invalid3x3Matrix.txt"));
+		} catch (Exception e) {
+			ex = e;
+		}
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
+
+	}
+	
+	@Test
+	public void invalidRowTest() throws Exception {
+		Exception ex = null;
+		try {
+			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidRow.txt"));
+		} catch (Exception e) {
+			ex = e;
+		}
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
+
+	}
+	
+	@Test
+	public void invalidColumnTest() throws Exception {
+		Exception ex = null;
+		try {
+			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "InvalidColumn.txt"));
+		} catch (Exception e) {
+			ex = e;
+		}
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
+
+	}
+
+
+	@Test
+	public void checkConfigTest() throws Exception {
+		FileSystemContext context = new FileSystemContext(BASE_PATH + "Valid.txt");
+		context.setFsConfig(SudokuFactory.build().retrieveFSConfig());
+		int result = SudokuFacade.build().executeSudokuValidation(context);
+		assertTrue(result == 0);
+	}
+
+	
 }

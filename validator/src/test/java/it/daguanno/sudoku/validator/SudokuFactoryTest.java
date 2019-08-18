@@ -28,6 +28,23 @@ public class SudokuFactoryTest {
     	
 	}
     
+    @Test 
+    public void chainTest() {
+		CheckChain chain = new RowCheck(new Matrix3x3Check(new ColumnCheck()));
+		SudokuEngine engine = new SudokuEngine(chain);
+		
+		assertTrue(engine != null);
+		
+		CheckChain tmp = engine;
+		short classCount = 0;
+		while(tmp.getNext() != null) {
+			classCount++;
+        	assertTrue(tmp != null);
+        	tmp = tmp.getNext();
+		}
+		assertTrue(classCount == 3);
+    }
+    
     @Test
 	public void retrieveSudokuEngineTest() {
     	

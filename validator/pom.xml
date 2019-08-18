@@ -18,7 +18,44 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.easymock/easymock -->
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>4.0.2</version>
+			<scope>test</scope>
+		</dependency>
 
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>2.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2 -->
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito2</artifactId>
+			<version>2.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.28.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-core</artifactId>
+			<version>2.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4-rule</artifactId>
+			<version>2.0.2</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
@@ -102,13 +139,13 @@
 							<goal>report</goal>
 						</goals>
 						<configuration>
-						    <excludes>
-						        <exclude>**/*Context.*</exclude>
-						        <exclude>**/*DTO.*</exclude>
-						        <exclude>**/*VO.*</exclude>
-						    </excludes>
+							<excludes>
+								<exclude>**/*Context.*</exclude>
+								<exclude>**/*DTO.*</exclude>
+								<exclude>**/*VO.*</exclude>
+							</excludes>
 						</configuration>
-						
+
 					</execution>
 					<!-- Threshold -->
 					<execution>
