@@ -1,6 +1,7 @@
 package it.daguanno.sudoku.validator.commons.log;
 
 import static java.util.logging.Level.ALL;
+import static it.daguanno.sudoku.validator.commons.file.FileSystemUtility.createIfNotExist;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,10 @@ public class LogConfig {
 	public final static String 	FILE_NAME		= "sudoku"		;
 	public final static String 	SEPARATOR		= "_"			;
 	public final static String 	FILE_EXTENSION	= ".log"		;
+	
+	private LogConfig() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	//quick and dirty log config
 	public static void execute() throws SecurityException, IOException {
@@ -60,9 +65,8 @@ public class LogConfig {
 	//dir log generator
 	private static void manageLogsFolder() {
 		File logDir = new File(LOG_FOLDER);
-		if (!(logDir.exists())) {
-			logDir.mkdir();
-		}
+		createIfNotExist(logDir);
 	}
+
 
 }

@@ -134,7 +134,7 @@ public class SudokuFileSystemRep implements ISudokuRepository<FileSystemContext>
 				throw new SudokuException(PARSING_ERROR);
 			}
 		}
-		if(!isDigit(ch) && row < rowsNum) {
+		if(row < rowsNum) {
 			throw new SudokuException(TOO_FEW_ROWS);
 		}
 		

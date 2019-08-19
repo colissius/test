@@ -1,5 +1,6 @@
 package it.daguanno.sudoku.validator;
 
+import static it.daguanno.sudoku.validator.TestConstantUtility.BASE_PATH;
 import static it.daguanno.sudoku.validator.commons.exceptions.SudokuException.EnumSudokuException.*;
 import static org.junit.Assert.assertTrue;
 
@@ -8,13 +9,12 @@ import org.junit.Test;
 import it.daguanno.sudoku.validator.application.SudokuFacade;
 import it.daguanno.sudoku.validator.application.factory.impl.SudokuFactory;
 import it.daguanno.sudoku.validator.application.model.impl.FileSystemContext;
+import it.daguanno.sudoku.validator.commons.data.SudokuMatrixDTO;
 import it.daguanno.sudoku.validator.commons.exceptions.SudokuException;
 import it.daguanno.sudoku.validator.domain.SudokuEngine;
 import it.daguanno.sudoku.validator.infrastructure.repository.ISudokuRepository;
 
 public class SudokuEngineTest {
-
-	private final static String BASE_PATH = "src\\test\\resources\\";
 
 	@Test
 	public void buildTest() {
@@ -104,6 +104,23 @@ public class SudokuEngineTest {
 
 	}
 
+	@Test
+	public void tooFewRow2Test() throws Exception {
+
+		Exception ex = null;
+		try {
+			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "tooFewRow2.txt"));
+		} catch (Exception e) {
+			ex = e;
+		}
+		ex.printStackTrace();
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(TOO_FEW_ROWS.getMsg().equals(ex.getMessage()));
+
+	}
+
+	
 	@Test
 	public void noFileTest() throws Exception {
 
@@ -215,5 +232,83 @@ public class SudokuEngineTest {
 		assertTrue(result == 0);
 	}
 
+	
+	@Test
+	public void checkToBigValueTest() throws Exception {
+		Exception ex = null;
+		try {
+			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "tooBigValue.txt"));
+		} catch (Exception e) {
+			ex = e;
+		}
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(PARSING_ERROR.getMsg().equals(ex.getMessage()));
+	}
+	
+	@Test
+	public void checkEngineToBigValueTest() throws Exception {
+		SudokuMatrixDTO matrixDTO = new SudokuMatrixDTO();
+		Short matrix[][] = new Short[9][9];
+		short value = 0;
+		for(short x = 0; x<9; x++) {
+			for(short y = 0; y<9; y++) {
+				matrix[x][y] = ++value;
+			}		
+		}
+		matrixDTO.setMatrix(matrix);
+		SudokuEngine sEngine = new SudokuEngine(null);
+		int ret = sEngine.check(matrixDTO);
+		assertTrue(ret == 1);
+		
+	}
+	
+	@Test
+	public void checkEngineNullValueTest() throws Exception {
+		Exception ex = null;
+		try {
+			SudokuMatrixDTO matrixDTO = new SudokuMatrixDTO();
+			Short matrix[][] = new Short[9][9];
+			matrixDTO.setMatrix(matrix);
+			SudokuEngine sEngine = new SudokuEngine(null);
+			sEngine.check(matrixDTO);
+		} catch (Exception e) {
+			ex = e;
+		}
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(INVALID.getMsg().equals(ex.getMessage()));
+	}
+	
+	
+	@Test
+	public void doubleColSeparatorTest() throws Exception {
+		Exception ex = null;
+		try {
+			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "doubleColSeparator.txt"));
+		} catch (Exception e) {
+			ex = e;
+		}
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(PARSING_ERROR.getMsg().equals(ex.getMessage()));
+		
+	}
+	
+	@Test
+	public void doubleRowSeparatorTest() throws Exception {
+		Exception ex = null;
+		try {
+			SudokuFacade.build().executeSudokuValidation(new FileSystemContext(BASE_PATH + "doubleRowSeparator.txt"));
+		} catch (Exception e) {
+			ex = e;
+		}
+		assertTrue(ex != null);
+		assertTrue(ex instanceof SudokuException);
+		assertTrue(PARSING_ERROR.getMsg().equals(ex.getMessage()));
+		
+	}
+	
+	
 	
 }

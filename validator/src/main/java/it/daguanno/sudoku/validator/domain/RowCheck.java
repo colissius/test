@@ -16,9 +16,6 @@ public class RowCheck extends CheckChain {
 	
 	protected static final Logger logger = Logger.getLogger(RowCheck.class.getName());
 	
-	public RowCheck() {
-	}
-
 	public RowCheck(CheckChain next) {
 		super.setNext(next);
 	}
