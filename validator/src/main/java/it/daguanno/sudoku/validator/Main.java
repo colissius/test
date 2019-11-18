@@ -16,7 +16,7 @@ import it.daguanno.sudoku.validator.application.SudokuFacade;
 import it.daguanno.sudoku.validator.application.model.impl.FileSystemContext;
 import it.daguanno.sudoku.validator.commons.exceptions.SudokuException;
 import it.daguanno.sudoku.validator.commons.log.LogConfig;
-
+//commento prova 2
 public class Main {
 	private static final Logger logger = Logger.getLogger(Main.class.getName());
 	
